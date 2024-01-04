@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fcf6f1 !important;
+  flex-direction: column;
+}
+.nav-link.pagina-principal {
+  color: #9a7665 !important;
+  font-size: 1.1rem;
+}
+
+.bg-marrom {
+  background-color: #cbb7ac !important;
+}
