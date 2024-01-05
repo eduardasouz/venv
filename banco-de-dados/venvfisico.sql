@@ -131,15 +131,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `maluly`.`Poduto`
+-- Table `maluly`.`Produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `maluly`.`Poduto` (
-  `PodutoID` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `maluly`.`Produto` (
+  `ProdutoID` INT NOT NULL AUTO_INCREMENT,
   `Nome` VARCHAR(255) NOT NULL,
   `preco` VARCHAR(45) NOT NULL,
   `Marca` INT NOT NULL,
   `Categoria` INT NOT NULL,
-  PRIMARY KEY (`PodutoID`),
+  PRIMARY KEY (`ProdutoID`),
   INDEX `Marca_idx` (`Marca` ASC) VISIBLE,
   INDEX `Categoria_idx` (`Categoria` ASC) VISIBLE,
   CONSTRAINT `Marca`
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `maluly`.`Estoque` (
     ON UPDATE NO ACTION,
   CONSTRAINT `Produto`
     FOREIGN KEY (`ProdutoID`)
-    REFERENCES `maluly`.`Poduto` (`PodutoID`)
+    REFERENCES `maluly`.`Produto` (`ProdutoID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `maluly`.`Poduto_has_Carrinho` (
   INDEX `fk_Poduto_has_Carrinho_Poduto1_idx` (`Poduto_PodutoID` ASC) VISIBLE,
   CONSTRAINT `fk_Poduto_has_Carrinho_Poduto1`
     FOREIGN KEY (`Poduto_PodutoID`)
-    REFERENCES `maluly`.`Poduto` (`PodutoID`)
+    REFERENCES `maluly`.`Produto` (`ProdutoID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Poduto_has_Carrinho_Carrinho1`
@@ -206,11 +206,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `maluly`.`Carrinho_has_Poduto` (
   `Carrinho_CarrinhoID` INT NOT NULL,
-  `Poduto_PodutoID` INT NOT NULL,
+  `Produto_ProdutoID` INT NOT NULL,
   `Quantidade` INT NOT NULL,
   `Total` FLOAT NOT NULL,
-  PRIMARY KEY (`Carrinho_CarrinhoID`, `Poduto_PodutoID`),
-  INDEX `fk_Carrinho_has_Poduto_Poduto1_idx` (`Poduto_PodutoID` ASC) VISIBLE,
+  PRIMARY KEY (`Carrinho_CarrinhoID`, `Produto_ProdutoID`),
+  INDEX `fk_Carrinho_has_Poduto_Poduto1_idx` (`Produto_ProdutoID` ASC) VISIBLE,
   INDEX `fk_Carrinho_has_Poduto_Carrinho1_idx` (`Carrinho_CarrinhoID` ASC) VISIBLE,
   CONSTRAINT `fk_Carrinho_has_Poduto_Carrinho1`
     FOREIGN KEY (`Carrinho_CarrinhoID`)
@@ -218,8 +218,8 @@ CREATE TABLE IF NOT EXISTS `maluly`.`Carrinho_has_Poduto` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Carrinho_has_Poduto_Poduto1`
-    FOREIGN KEY (`Poduto_PodutoID`)
-    REFERENCES `maluly`.`Poduto` (`PodutoID`)
+    FOREIGN KEY (`Produto_ProdutoID`)
+    REFERENCES `maluly`.`Produto` (`ProdutoID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -231,12 +231,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `maluly`.`Imagem` (
   `ImagemID` INT NOT NULL AUTO_INCREMENT,
   `URL` VARCHAR(255) NOT NULL,
-  `Poduto_PodutoID` INT NOT NULL,
+  `Produto_ProdutoID` INT NOT NULL,
   PRIMARY KEY (`ImagemID`),
-  INDEX `fk_Imagem_Poduto1_idx` (`Poduto_PodutoID` ASC) VISIBLE,
+  INDEX `fk_Imagem_Poduto1_idx` (`Produto_ProdutoID` ASC) VISIBLE,
   CONSTRAINT `fk_Imagem_Poduto1`
-    FOREIGN KEY (`Poduto_PodutoID`)
-    REFERENCES `maluly`.`Poduto` (`PodutoID`)
+    FOREIGN KEY (`Produto_ProdutoID`)
+    REFERENCES `maluly`.`Produto` (`ProdutoID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
