@@ -91,7 +91,7 @@ def minha_conta():
 @app.route('/Produto')
 def produtos():
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM produto")
+    cursor.execute("SELECT * FROM Produto")
     data = cursor.fetchall()
     cursor.close()
     return str(data)
