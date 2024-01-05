@@ -18,6 +18,7 @@ app.config['MYSQL_DB'] = 'maluly'
 mysql = MySQL()
 mysql.init_app(app)
 
+
 @app.route('/Cliente/<Nome>')
 def cliente(Nome):
     cursor = mysql.connection.cursor()
@@ -80,7 +81,7 @@ def minha_conta():
         Cliente= session['Cliente']
 
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM cliente WHERE Clientei= %s", (Cliente,))
+        cursor.execute("SELECT * FROM cliente WHERE Cliente= %s", (Cliente,))
         user_info = cursor.fetchone()
         cursor.close()
 
