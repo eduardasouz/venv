@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="\static/cadastro.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/cadastro.css" />
     <title>Cadastro - Loja de Cosméticos Maluly</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <form class="registration-form">
-            <h2>Cadastro</h2>
-            <label for="name">Nome:</label>
-            <input type="text" id="Nome" name="name" required>
+      <form class="registration-form" action="/cadastro" method="post">
+        <h2>Cadastro</h2>
+        <label for="name">Nome:</label>
+        <input type="text" id="Nome" name="nome" required />
 
-            <label for="Email">E-mail:</label>
-            <input type="Email" id="Email" name="email" required>
+        <label for="Email">E-mail:</label>
+        <input type="Email" id="Email" name="email" required />
 
-            <label for="Senha">Senha:</label>
-            <input type="Senha" id="Senha" name="Senha" required>
+        <label for="Senha">Senha:</label>
+        <input type="Senha" id="Senha" name="senha" required />
 
-            <label for="CPF">CPF:</label>
-            <input type="CPF" id="CPF" name="CPF" required>
-            
-            <label for="Telefone">Telefone:</label>
-            <input type="tel" id="Telefone" name="Telefone" required>
-            <button type="submit">Cadastrar</button>
-            <BR>
-            <a href="http://127.0.0.1:5500/templates/login.html">Tem uma conta?ENTRE</a>
-        </form>
+        <label for="CPF">CPF:</label>
+        <input type="CPF" id="CPF" name="cpf" required />
+
+        <label for="Telefone">Telefone:</label>
+        <input type="tel" id="Telefone" name="telefone" required />
+        <button type="submit">Cadastrar</button>
+        <br />
+        <a href="/login">Tem uma conta? ENTRE</a>
+      </form>
     </div>
-</body>
+  </body>
 </html>

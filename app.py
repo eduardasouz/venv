@@ -1,7 +1,7 @@
 #pip install Flask-MySQLdb
 
-from flask import Flask, render_template, request, url_for, redirect, session 
-from flask import request, abort
+from flask import Flask, render_template, request, redirect, session 
+from flask import request
 from flask_mysqldb import MySQL
 
 
@@ -9,15 +9,12 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 # Configurações do banco de dados
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'labinfo'
+app.config['MYSQL_USER'] = 'maluly'
+app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'maluly'
 
-# Inicialização do MySQL
-mysql = MySQL()
-mysql.init_app(app)
-
+# Inicialização do MySQL    
+mysql = MySQL(app)
 
 @app.route('/Cliente/<Nome>')
 def cliente(Nome):
@@ -27,67 +24,75 @@ def cliente(Nome):
     cursor.close()
     return str(data)
 
+@app.route('/')
+def home():
+    if 'Cliente' in session:
+        Cliente= session['Cliente']
 
-@app.route('/login.html')
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (str(Cliente)))
+        user_info = cursor.fetchone()
+        cursor.close()
+
+        return render_template('principal.html', nome=user_info[1])
+    else:
+        return render_template('principal.html')
+
+@app.route('/login')
 def login():
     return render_template('login.html')
 
-@app.route('/cadastro.html')
+@app.route('/cadastro')
 def cadastro():
     return render_template('cadastro.html')
 
 
 @app.route('/cadastro', methods=['POST'])
 def Cadastro():
-    if request.method == 'POST':
-        Nome = request.form['Nome']
-        Email = request.form['Email']
-        Telefone = request.form['Telefone']
-        Senha = request.form['Senha']
-        CPF = request.form['CPF']
-       
-
-        cursor = mysql.connection.cursor()
-        cursor.execute('INSERTO INTO cliente (Nome, Email, CPF, Senha) VALUES(%s, %s, %s, %s)', (Nome, Email, CPF, Senha, Telefone))
-        mysql.connection.commit()
-        cursor.close()
-
-        return redirect
+    Nome = request.form['nome']
+    Email = request.form['email']
+    Telefone = request.form['telefone']
+    Senha = request.form['senha']
+    CPF = request.form['cpf']
     
-@app.route('/enviar', methods=['GET', 'POST'])
+    cursor = mysql.connection.cursor()
+    cursor.execute('INSERT INTO Cliente (Nome, Email, Telefone, Senha, CPF) VALUES (%s, %s, %s, %s, %s)', (Nome, Email, Telefone, Senha, CPF))
+    mysql.connection.commit()
+    cursor.close()
+
+    return redirect("/login")
+    
+@app.route('/entrar', methods=['POST'])
 def enviar():
-    if request.method == 'POST':
-        Email = request.form['Email']
-        Senha = request.form['Senha']
+    Email = request.form['usuario']
+    Senha = request.form['senha']
 
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM Cliente WHERE email = %s AND Senha = %s", (Email, Senha))
-        user = cursor.fetchone()
-        cursor.close
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM Cliente WHERE Email = %s AND Senha = %s", (Email, Senha))
+    user = cursor.fetchone()
+    cursor.close()
 
-        if user:
-            session['Cliente'] = user[0]
-            
-            return redirect('/minha_conta')
-        else:
-            return redirect('/login.html') 
+    if user:
+        session['Cliente'] = user[0]
+        return redirect('/')
+    else:
+        return redirect('/login') 
+    
 
-    return render_template('login.html') 
 
 @app.route('/minha_conta')
 def minha_conta():
-
     if 'Cliente' in session:
         Cliente= session['Cliente']
 
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM cliente WHERE Cliente= %s", (Cliente,))
+        cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (str(Cliente)))
         user_info = cursor.fetchone()
         cursor.close()
 
-        return render_template('principal.html', user_info=user_info)
+        return render_template('principal.html', nome=user_info[1])
     else:
-        return redirect('/login.html') 
+        return redirect('/login') 
 
 @app.route('/Produto')
 def produtos():
@@ -97,5 +102,11 @@ def produtos():
     cursor.close()
     return str(data)
 
+
+@app.route('/baseglow/index.html')
+def baseglow():
+    return render_template('baseglow/index.html')
+
 if __name__ == '__main__':
+    app.secret_key = 'maluly'
     app.run(debug=True)
