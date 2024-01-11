@@ -7,7 +7,8 @@ from flask_mysqldb import MySQL
 
 
 app = Flask(__name__)
-
+app.secret_key = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Configurações do banco de dados
 app.config['MYSQL_HOST'] = 'localhost'
@@ -110,6 +111,4 @@ def produtos():
 def baseglow():
     return render_template('baseglow/index.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
-    secret_key ='192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf' 
+
