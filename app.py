@@ -8,6 +8,7 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'  
 
 # Configurações do banco de dados
 app.config['MYSQL_HOST'] = 'localhost'
@@ -73,6 +74,7 @@ def enviar():
     cursor.execute("SELECT * FROM Cliente WHERE Email = %s AND Senha = %s", (Email, Senha))
     user = cursor.fetchone()
     cursor.close()
+    app.config.from_pyfile('config.py') 
 
     if user:
         session['Cliente'] = user[0]
@@ -110,5 +112,4 @@ def baseglow():
     return render_template('baseglow/index.html')
 
 if __name__ == '__main__':
-    app.secret_key = 'maluly'
     app.run(debug=True)
