@@ -10,8 +10,8 @@ app = Flask(__name__)
 
 # Configurações do banco de dados
 app.config['MYSQL_USER'] = 'maluly'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'maluly'
+app.config['MYSQL_PASSWORD'] = 'labinfo'
+app.config['MYSQL_DB'] = 'root'
 
 # Inicialização do MySQL    
 mysql = MySQL(app)
