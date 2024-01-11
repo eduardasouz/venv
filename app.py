@@ -65,6 +65,7 @@ def Cadastro():
 
     return redirect("/login")
     
+    
 @app.route('/entrar', methods=['POST'])
 def enviar():
     Email = request.form['usuario']
@@ -98,17 +99,6 @@ def minha_conta():
     else:
         return redirect('/login') 
 
-@app.route('/Produto')
-def produtos():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM Produto")
-    data = cursor.fetchall()
-    cursor.close()
-    return str(data)
 
-
-@app.route('/baseglow/index.html')
-def baseglow():
-    return render_template('baseglow/index.html')
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
