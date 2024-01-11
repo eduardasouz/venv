@@ -74,7 +74,7 @@ def enviar():
     cursor.execute("SELECT * FROM Cliente WHERE Email = %s AND Senha = %s", (Email, Senha))
     user = cursor.fetchone()
     cursor.close()
-    app.config.from_pyfile('config.py') 
+   
 
     if user:
         session['Cliente'] = user[0]
